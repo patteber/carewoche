@@ -1,0 +1,7 @@
+{
+    "Members": [
+        { "Name": "Alic", "ID": 1},
+        { "Name": "Bob", "ID": 2 }
+    ], 
+    "Order": [1, 2]
+}
