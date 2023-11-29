@@ -8,7 +8,12 @@ class Test_jsonio(unittest.TestCase):
     _schema3 = {"number": int, "nested":{"array":[bool], "name":str}}
     
     def test_getDataOK(self):
-        exp = {"Name": "Slim"}
+        exp = { "Members": [
+                    { "Name": "Alice", "ID": 1 },
+                    { "Name": "Bob", "ID": 2 },
+                    { "Name": "Charlie", "ID": 3 }
+                ], 
+                "Order": [1, 2, 3]}
         data = jsonio.getData('test/resource_t1.json', jsonio.listeSchema)
         self.assertEquals(exp, data)
     
