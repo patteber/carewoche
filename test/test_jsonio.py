@@ -8,14 +8,21 @@ class Test_jsonio(unittest.TestCase):
     _schema3 = {"number": int, "nested":{"array":[bool], "name":str}}
     
     def test_getDataOK(self):
-        exp = { "Members": [
-                    { "Name": "Alice", "ID": 1 },
-                    { "Name": "Bob", "ID": 2 },
-                    { "Name": "Charlie", "ID": 3 }
-                ], 
+        exp = {     "Members": {
+                    "Alice": { "ID": 1 },
+                    "Bob": { "ID": 2 },
+                    "Charlie": { "ID": 3 }
+                },  
                 "Order": [1, 2, 3]}
+        
         data = jsonio.getData('test/resource_t1.json', jsonio.listeSchema)
         self.assertEquals(exp, data)
+        members = data["Members"]
+        print(members)
+        print(members["Alice"])
+        for m in members:
+            print(m + ", ID: " + str(members[m]["ID"]))
+
     
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
