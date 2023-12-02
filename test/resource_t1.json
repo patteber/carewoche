@@ -3,6 +3,6 @@
         "Alice": { "ID": 1 },
         "Bob": { "ID": 2 },
         "Charlie": { "ID": 3 }
-    }, 
+    },  
     "Order": [1, 2, 3]
 }

@@ -1,5 +1,5 @@
 import unittest
-import jsonio
+from jsonio import jsonio
 # import json_checker
 
 class Test_jsonio(unittest.TestCase):
@@ -7,22 +7,43 @@ class Test_jsonio(unittest.TestCase):
     _schema2 = {"number": int, "array":[str]}
     _schema3 = {"number": int, "nested":{"array":[bool], "name":str}}
     
-    def test_getDataOK(self):
-        exp = {     "Members": {
-                    "Alice": { "ID": 1 },
-                    "Bob": { "ID": 2 },
-                    "Charlie": { "ID": 3 }
-                },  
-                "Order": [1, 2, 3]}
-        
-        data = jsonio.getData('test/resource_t1.json', jsonio.listeSchema)
-        self.assertEquals(exp, data)
-        members = data["Members"]
-        print(members)
-        print(members["Alice"])
-        for m in members:
-            print(m + ", ID: " + str(members[m]["ID"]))
+    file_t1 = 'test/resource_t1.json'
+    t1_exp =    {
+                    "Members": {
+                        "Alice": { "ID": 1 },
+                        "Bob": { "ID": 2 },
+                        "Charlie": { "ID": 3 }
+                    },  
+                    "Order": [1, 2, 3]
+                }
 
+    def setUp(self) -> None:
+        self.cut = jsonio(self.file_t1)
+        return super().setUp()
+    
+    def tearDown(self) -> None:
+        return super().tearDown()
+    
+    def test_getDataOK(self):
+        self.assertEquals(self.t1_exp, self.cut.getData())
+        self.assertIsNotNone(self.cut.getMembers())
+        self.assertIsNotNone(self.cut.getOrder())
+        
+    def test_accessMemberByNameOK(self):
+        data = self.cut.getData()
+        members = data["Members"]
+        exp = ("Alice", "Bob", "Charlie")
+        i = 0
+        for m in members:
+            self.assertEqual(m, exp[i])
+            m_data = members[exp[i]]
+            self.assertEqual(m_data, members[m])
+            self.assertEqual(members[m]["ID"], (i+1))
+            i=i+1
+
+    def test_iterateOrder(self):
+        print(self.cut.getOrder())
+        self.cut.iterateOrder()
     
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
