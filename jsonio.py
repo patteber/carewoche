@@ -24,6 +24,9 @@ class jsonio:
     def getOrder(self):
         return self.data["Order"]
     
+    def setOrder(self, newOrder) -> None:
+        self.data["Order"] = newOrder
+    
     def iterateOrder(self):
         currOrder = self.getOrder()
         length = len(currOrder)
@@ -35,4 +38,5 @@ class jsonio:
         while i < len(currOrder):
             newOrder[i-1] = currOrder[i]
             i += 1
-        print(newOrder)
+        self.setOrder(newOrder)
+        

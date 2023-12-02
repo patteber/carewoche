@@ -41,9 +41,10 @@ class Test_jsonio(unittest.TestCase):
             self.assertEqual(members[m]["ID"], (i+1))
             i=i+1
 
-    def test_iterateOrder(self):
-        print(self.cut.getOrder())
+    def test_iterateOrderOK(self):
+        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
         self.cut.iterateOrder()
+        self.assertEqual(self.cut.getOrder(), [2, 3, 1])
     
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
