@@ -1,19 +1,9 @@
 import json
-#from json_checker import Checker
 
-class jsonio:
-    listeSchema = {
-        "liste" : [str]
-    }
-    
+class Carewoche:
     def __init__(self, file) -> None:
         with open(file, mode='r') as f:
             self.data = json.load(f)
-            # validate(data, schema)
-     
-    # def validate(data, schema):
-    #      check = Checker(schema, soft=True)
-    #      check.validate(data)
 
     def getData(self):
         return self.data
