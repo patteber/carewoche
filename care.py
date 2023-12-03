@@ -32,7 +32,14 @@ class Carewoche:
     def changeMembersOrder(self, id, offset):
         currOrder = self.getOrder()
         currIdx = currOrder.index(id)
-        newIdx = currIdx + offset % len(currOrder)
+        newIdx = currIdx + offset % (len(currOrder) -1)
+        e = currOrder.pop(currIdx)
+        currOrder.insert(newIdx, e)
+        
+        # newOrder = currOrder[:newIdx-1]
+        # newOrder.append(id)
+        # newOrder += currIdx[newIdx+1:]
+        print(currOrder)
         
         # member = None
         # for m in self.getMembers():

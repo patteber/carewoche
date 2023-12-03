@@ -44,6 +44,10 @@ class Test_Carewoche(unittest.TestCase):
         self.assertEqual(self.cut.getOrder(), [1, 2, 3])
         self.cut.iterateOrder()
         self.assertEqual(self.cut.getOrder(), [2, 3, 1])
+        
+    def test_changeMemeberOrder(self):
+        print(self.cut.getOrder())
+        self.cut.changeMembersOrder(2, 1)
     
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
