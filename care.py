@@ -23,10 +23,20 @@ class Carewoche:
         if length < 2:
             return 
         newOrder = [0]*length
-        newOrder[length-1] = currOrder[0]
-        i = 1
-        while i < len(currOrder):
-            newOrder[i-1] = currOrder[i]
+        i = 0
+        while i < length:
+            newOrder[i] = currOrder[i+1 if i < length-1 else 0]
             i += 1
         self.setOrder(newOrder)
+        
+    def changeMembersOrder(self, id, offset):
+        currOrder = self.getOrder()
+        currIdx = currOrder.index(id)
+        newIdx = currIdx + offset % len(currOrder)
+        
+        # member = None
+        # for m in self.getMembers():
+        #     if m["ID"] == id:
+        #         member = m
+        # assert(member != None)
         

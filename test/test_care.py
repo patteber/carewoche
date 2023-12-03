@@ -24,7 +24,7 @@ class Test_Carewoche(unittest.TestCase):
         return super().tearDown()
     
     def test_getDataOK(self):
-        self.assertEquals(self.t1_exp, self.cut.getData())
+        self.assertEqual(self.t1_exp, self.cut.getData())
         self.assertIsNotNone(self.cut.getMembers())
         self.assertIsNotNone(self.cut.getOrder())
         
