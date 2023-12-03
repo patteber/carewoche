@@ -30,20 +30,12 @@ class Carewoche:
         self.setOrder(newOrder)
         
     def changeMembersOrder(self, id, offset):
-        currOrder = self.getOrder()
-        currIdx = currOrder.index(id)
-        newIdx = currIdx + offset % (len(currOrder) -1)
-        e = currOrder.pop(currIdx)
-        currOrder.insert(newIdx, e)
-        
-        # newOrder = currOrder[:newIdx-1]
-        # newOrder.append(id)
-        # newOrder += currIdx[newIdx+1:]
-        print(currOrder)
-        
-        # member = None
-        # for m in self.getMembers():
-        #     if m["ID"] == id:
-        #         member = m
-        # assert(member != None)
+        o = self.getOrder()
+        currIdx = o.index(id)
+        # to calculate zero-based index correctly using % 
+        # we first add 1 calculate with % and substract 1 in the result
+        newIdx = (currIdx + offset) % len(o)
+        e = o.pop(currIdx)
+        o.insert(newIdx, e)
+        self.setOrder(o)
         
