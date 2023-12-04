@@ -1,0 +1,12 @@
+# POST http://127.0.0.1:8000/order/iterate/ HTTP/1.1
+# content-type: application/json
+
+# {}
+
+POST http://127.0.0.1:8000/order/change/ HTTP/1.1
+content-type: application/json
+
+{
+    "ID": 2,
+    "offset": 1
+}
