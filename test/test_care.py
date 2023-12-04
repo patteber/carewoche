@@ -2,10 +2,6 @@ import unittest
 from care import Carewoche
 
 class Test_Carewoche(unittest.TestCase):
-    _schema1 = {"number": int}
-    _schema2 = {"number": int, "array":[str]}
-    _schema3 = {"number": int, "nested":{"array":[bool], "name":str}}
-    
     file_t1 = 'test/resource_t1.json'
     t1_exp =    {
                     "Members": {
@@ -45,14 +41,42 @@ class Test_Carewoche(unittest.TestCase):
         self.cut.iterateOrder()
         self.assertEqual(self.cut.getOrder(), [2, 3, 1])
         
-    def test_changeOrderAdd(self):
+    def test_iterateOrderOnOneMemberOK(self):
+        o = self.cut.getOrder()
+        o.pop(0)
+        o.pop(0)
+        self.assertEqual(self.cut.getOrder(), [3])
+        self.cut.iterateOrder()
+        self.assertEqual(self.cut.getOrder(), [3])
+        
+    def test_changeOrderPlus(self):
+        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
         self.cut.changeMembersOrder(2, 1)
         self.assertEqual(self.cut.getOrder(), [1, 3, 2])
     
-    def test_changeOrderAddOverflow(self):
+    def test_changeOrderPlusOverflow(self):
+        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
         self.cut.changeMembersOrder(2, 2)
         self.assertEqual(self.cut.getOrder(), [2, 1, 3])
         
+    def test_changeOrderMinus(self):
+        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
+        self.cut.changeMembersOrder(2, -1)
+        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        
+    def test_changeOrderMinusOverflow(self):
+        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
+        self.cut.changeMembersOrder(1, -2)
+        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        
+    def test_changeOrderOnOneMemberOK(self):
+        o = self.cut.getOrder()
+        o.pop(0)
+        o.pop(0)
+        self.assertEqual(self.cut.getOrder(), [3])
+        self.cut.changeMembersOrder(3, 2)
+        self.assertEqual(self.cut.getOrder(), [3])
+
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
         #     data = Carewoche.getData('data.json', self._schema1)

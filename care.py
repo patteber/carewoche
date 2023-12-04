@@ -18,24 +18,15 @@ class Carewoche:
         self.data["Order"] = newOrder
     
     def iterateOrder(self):
-        currOrder = self.getOrder()
-        length = len(currOrder)
-        if length < 2:
-            return 
-        newOrder = [0]*length
-        i = 0
-        while i < length:
-            newOrder[i] = currOrder[i+1 if i < length-1 else 0]
-            i += 1
-        self.setOrder(newOrder)
+        o = currOrder = self.getOrder()
+        o.insert(len(o)-1, o.pop(0))
         
     def changeMembersOrder(self, id, offset):
         o = self.getOrder()
         currIdx = o.index(id)
-        # to calculate zero-based index correctly using % 
-        # we first add 1 calculate with % and substract 1 in the result
         newIdx = (currIdx + offset) % len(o)
-        e = o.pop(currIdx)
-        o.insert(newIdx, e)
+        if newIdx < 0:
+            newIdx += len(o) - 1
+        o.insert(newIdx, o.pop(currIdx))
         self.setOrder(o)
         
