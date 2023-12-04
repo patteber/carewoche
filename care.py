@@ -2,8 +2,14 @@ import json
 
 class Carewoche:
     def __init__(self, file) -> None:
+        self.file = file
         with open(file, mode='r') as f:
             self.data = json.load(f)
+            
+    def writeFile(self, suffix = ""):
+        json_object = json.dumps(self.getData(), indent=4)
+        with open(self.file + suffix, "w") as outfile:
+            outfile.write(json_object)
 
     def getData(self):
         return self.data

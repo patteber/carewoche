@@ -1,3 +1,4 @@
+import os
 import unittest
 from care import Carewoche
 
@@ -17,6 +18,9 @@ class Test_Carewoche(unittest.TestCase):
         return super().setUp()
     
     def tearDown(self) -> None:
+        f = self.file_t1 + ".update"
+        if os.path.exists(f):
+            os.remove(f)
         return super().tearDown()
     
     def test_getDataOK(self):
@@ -77,13 +81,15 @@ class Test_Carewoche(unittest.TestCase):
         self.cut.changeMembersOrder(3, 2)
         self.assertEqual(self.cut.getOrder(), [3])
 
-    def test_dict2list(self):
-        skip = 0
-        limit = 2
-        l = list(self.cut.getMembers().items())
-        ol = l[skip: skip + limit]
-        print(dict(ol))
-
+    def test_writeUpdateOk(self):
+        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
+        self.cut.changeMembersOrder(2, 2)
+        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        self.cut.writeFile(".update")
+        cut2 = Carewoche(self.file_t1 + ".update")
+        self.assertEqual(cut2.getOrder(), [2, 1, 3])
+        
+        
 
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
