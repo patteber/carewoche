@@ -77,6 +77,14 @@ class Test_Carewoche(unittest.TestCase):
         self.cut.changeMembersOrder(3, 2)
         self.assertEqual(self.cut.getOrder(), [3])
 
+    def test_dict2list(self):
+        skip = 0
+        limit = 2
+        l = list(self.cut.getMembers().items())
+        ol = l[skip: skip + limit]
+        print(dict(ol))
+
+
     # def test_getDataFail(self):
         # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
         #     data = Carewoche.getData('data.json', self._schema1)
