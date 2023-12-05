@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Here goes Carewoche"}
+    return {"Service Name": "CareWocheService"}
 
 @app.get("/members/")
 async def read_members(skip: int = 0, limit: int = 10):
@@ -15,11 +15,13 @@ async def read_members(skip: int = 0, limit: int = 10):
     l = list(c.getMembers().items())
     ol = l[skip: skip + limit]
     return dict(ol)
+# post/put member, see https://realpython.com/api-integration-in-python/#fastapi
 
 @app.get("/order/")
 async def read_order(skip: int = 0, limit: int = 10):
     c = Carewoche('test/resource_t2.json')
     return c.getOrder()[skip: skip + limit]
+
     
 class changeOrder(BaseModel):
     ID: int
