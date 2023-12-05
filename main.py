@@ -1,8 +1,32 @@
+import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from care import Carewoche
 from pydantic import BaseModel, Field
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.mount('/static', StaticFiles(directory='static',html=True))
+if __name__ == '__main__':
+    uvicorn.run(app, host='0.0.0.0')
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "file:///C:/Users/patri/dev/repo/carewoche/web/index.html"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 #> uvicorn main:app --reload
 class Member(BaseModel):
     name: str
