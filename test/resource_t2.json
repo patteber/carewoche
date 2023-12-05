@@ -1,9 +1,21 @@
 {
     "Members": {
-        "Alice": { "IsActive": true },
-        "Bob": { "IsActive": true },
-        "Charlie": { "IsActive": true },
-        "Doris": {"IsActive": false}
-    },  
-    "Order": ["Alice", "Bob", "Charlie"]
+        "Alice": {
+            "IsActive": true
+        },
+        "Bob": {
+            "IsActive": true
+        },
+        "Charlie": {
+            "IsActive": true
+        },
+        "Doris": {
+            "IsActive": false
+        }
+    },
+    "Order": [
+        "Alice",
+        "Bob",
+        "Charlie"
+    ]
 }

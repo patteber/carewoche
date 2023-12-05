@@ -13,6 +13,6 @@ POST http://127.0.0.1:8000/order/change/ HTTP/1.1
 content-type: application/json
 
 {
-    "ID": 3,
-    "offset": 3
+    "name": "Alice",
+    "offset": 1
 }

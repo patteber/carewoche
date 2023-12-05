@@ -24,14 +24,14 @@ async def read_order(skip: int = 0, limit: int = 10):
 
     
 class changeOrder(BaseModel):
-    ID: int
+    name: str
     offset: int
     
 @app.post("/order/change/")
 async def change_order(co: changeOrder):
     d = co.model_dump()
     c = Carewoche('test/resource_t2.json')
-    c.changeMembersOrder(d.get("ID"), d.get("offset"))
+    c.changeMembersOrder(d.get("name"), d.get("offset"))
     c.writeFile()
     return c.getOrder()
 
