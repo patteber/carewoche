@@ -17,15 +17,33 @@ class Carewoche:
     def getMembers(self):
         return self.data["Members"]
     
+    def postMember(self, name, active):
+        m = self.getMembers()
+        o = self.getOrder()
+        isNew = False if name in m else True
+        if isNew: # create
+            m[name] = {"IsActive": active}
+            if active: 
+                o.append(name)
+        else: # update
+            if active:
+                self.activateMeber(name)
+            else:
+                self.deactivateMeber(name)
+    
+    def deleteMember(self, name):
+        m = self.getMembers().pop(name, None)
+        if m != None and m["IsActive"]:
+            o = self.getOrder()
+            o.pop(o.index(name))
+    
     def getOrder(self):
         return self.data["Order"]
-    
-    def setOrder(self, newOrder) -> None:
-        self.data["Order"] = newOrder
         
     def activateMeber(self, name):
         self.getMembers()[name]["IsActive"] = True
-        self.getOrder().append(name)
+        if not name in self.getOrder():
+            self.getOrder().append(name)
     
     def deactivateMeber(self, name):
         self.getMembers()[name]["IsActive"] = False
@@ -43,5 +61,4 @@ class Carewoche:
         if newIdx < 0:
             newIdx += len(o) - 1
         o.insert(newIdx, o.pop(currIdx))
-        self.setOrder(o)
         

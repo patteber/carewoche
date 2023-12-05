@@ -29,6 +29,40 @@ class Test_Carewoche(unittest.TestCase):
         self.assertIsNotNone(self.cut.getMembers())
         self.assertIsNotNone(self.cut.getOrder())
         
+    def test_createMemberOK(self):
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.postMember("Eve", True)
+        self.assertTrue("Eve" in self.cut.getMembers())
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie", "Eve"])
+    
+    def test_updateMemberOK(self):
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.postMember("Doris", True)
+        self.assertTrue("Doris" in self.cut.getMembers())
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie", "Doris"])
+        
+    def test_createMemberTwiceOK(self):
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.postMember("Eve", True)
+        self.assertTrue("Eve" in self.cut.getMembers())
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie", "Eve"])
+        self.cut.postMember("Eve", True)
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie", "Eve"])
+        
+    def test_deleteMemberOK(self):
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.deleteMember("Alice")
+        self.assertFalse("Alice" in self.cut.getMembers())
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Charlie"])
+        self.assertTrue("Doris" in self.cut.getMembers())
+        self.cut.deleteMember("Doris")
+        self.assertFalse("Doris" in self.cut.getMembers())
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Charlie"])
+        # double delete has no effects
+        self.cut.deleteMember("Doris")
+        self.assertFalse("Doris" in self.cut.getMembers())
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Charlie"])
+        
     def test_accessMemberByNameOK(self):
         members = self.cut.getMembers()
         exp_name = ("Alice", "Bob", "Charlie", "Doris")
@@ -109,13 +143,6 @@ class Test_Carewoche(unittest.TestCase):
         self.cut.writeFile(".update")
         cut2 = Carewoche(self.file_t1 + ".update")
         self.assertEqual(cut2.getOrder(), ["Bob", "Alice", "Charlie"])
-        
-        
-
-    # def test_getDataFail(self):
-        # with self.assertRaises(json_checker.core.exceptions.CheckerError) as cm:
-        #     data = Carewoche.getData('data.json', self._schema1)
-        
         
 if __name__ == '__main__':
     unittest.main()
