@@ -6,11 +6,12 @@ class Test_Carewoche(unittest.TestCase):
     file_t1 = 'test/resource_t1.json'
     t1_exp =    {
                     "Members": {
-                        "Alice": { "ID": 1 },
-                        "Bob": { "ID": 2 },
-                        "Charlie": { "ID": 3 }
+                        "Alice": { "IsActive": True },
+                        "Bob": { "IsActive": True },
+                        "Charlie": { "IsActive": True },
+                        "Doris": {"IsActive": False}
                     },  
-                    "Order": [1, 2, 3]
+                    "Order": ["Alice", "Bob", "Charlie"]
                 }
 
     def setUp(self) -> None:
@@ -29,65 +30,85 @@ class Test_Carewoche(unittest.TestCase):
         self.assertIsNotNone(self.cut.getOrder())
         
     def test_accessMemberByNameOK(self):
-        data = self.cut.getData()
-        members = data["Members"]
-        exp = ("Alice", "Bob", "Charlie")
+        members = self.cut.getMembers()
+        exp_name = ("Alice", "Bob", "Charlie", "Doris")
+        exp_active = (True, True, True, False)
         i = 0
         for m in members:
-            self.assertEqual(m, exp[i])
-            m_data = members[exp[i]]
+            self.assertEqual(m, exp_name[i])
+            m_data = members[exp_name[i]]
             self.assertEqual(m_data, members[m])
-            self.assertEqual(members[m]["ID"], (i+1))
-            i=i+1
+            self.assertEqual(members[m]["IsActive"], exp_active[i])
+            i += 1
+            
+    def test_deactivateMember(self):
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.assertEqual(self.cut.getMembers()["Alice"]["IsActive"], True)
+        self.cut.deactivateMeber("Alice")
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Charlie"])
+        self.assertEqual(self.cut.getMembers()["Alice"]["IsActive"], False)
+        
+    def test_activateMember(self):
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.assertEqual(self.cut.getMembers()["Doris"]["IsActive"], False)
+        self.cut.activateMeber("Doris")
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie", "Doris"])
+        self.assertEqual(self.cut.getMembers()["Doris"]["IsActive"], True)
 
     def test_iterateOrderOK(self):
-        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
         self.cut.iterateOrder()
-        self.assertEqual(self.cut.getOrder(), [2, 3, 1])
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Charlie", "Alice"])
         
     def test_iterateOrderOnOneMemberOK(self):
         o = self.cut.getOrder()
         o.pop(0)
         o.pop(0)
-        self.assertEqual(self.cut.getOrder(), [3])
+        self.assertEqual(self.cut.getOrder(), ["Charlie"])
         self.cut.iterateOrder()
-        self.assertEqual(self.cut.getOrder(), [3])
+        self.assertEqual(self.cut.getOrder(), ["Charlie"])
         
     def test_changeOrderPlus(self):
-        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
-        self.cut.changeMembersOrder(2, 1)
-        self.assertEqual(self.cut.getOrder(), [1, 3, 2])
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.changeMembersOrder("Bob", 1)
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Charlie", "Bob"])
     
     def test_changeOrderPlusOverflow(self):
-        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
-        self.cut.changeMembersOrder(2, 2)
-        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.changeMembersOrder("Bob", 2)
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Alice", "Charlie"])
         
     def test_changeOrderMinus(self):
-        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
-        self.cut.changeMembersOrder(2, -1)
-        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.changeMembersOrder("Bob", -1)
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Alice", "Charlie"])
         
     def test_changeOrderMinusOverflow(self):
-        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
-        self.cut.changeMembersOrder(1, -2)
-        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.changeMembersOrder("Alice", -2)
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Alice", "Charlie"])
         
     def test_changeOrderOnOneMemberOK(self):
         o = self.cut.getOrder()
         o.pop(0)
         o.pop(0)
-        self.assertEqual(self.cut.getOrder(), [3])
-        self.cut.changeMembersOrder(3, 2)
-        self.assertEqual(self.cut.getOrder(), [3])
-
+        self.assertEqual(self.cut.getOrder(), ["Charlie"])
+        self.cut.changeMembersOrder("Charlie", 2)
+        self.assertEqual(self.cut.getOrder(), ["Charlie"])
+        
+    def test_changeOrderWrongMemberFail(self):
+        o = self.cut.getOrder()
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        with self.assertRaises(ValueError) as cm:
+            self.cut.changeMembersOrder("Doris", 2)
+        
     def test_writeUpdateOk(self):
-        self.assertEqual(self.cut.getOrder(), [1, 2, 3])
-        self.cut.changeMembersOrder(2, 2)
-        self.assertEqual(self.cut.getOrder(), [2, 1, 3])
+        self.assertEqual(self.cut.getOrder(), ["Alice", "Bob", "Charlie"])
+        self.cut.changeMembersOrder("Bob", 2)
+        self.assertEqual(self.cut.getOrder(), ["Bob", "Alice", "Charlie"])
         self.cut.writeFile(".update")
         cut2 = Carewoche(self.file_t1 + ".update")
-        self.assertEqual(cut2.getOrder(), [2, 1, 3])
+        self.assertEqual(cut2.getOrder(), ["Bob", "Alice", "Charlie"])
         
         
 

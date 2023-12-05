@@ -22,14 +22,23 @@ class Carewoche:
     
     def setOrder(self, newOrder) -> None:
         self.data["Order"] = newOrder
+        
+    def activateMeber(self, name):
+        self.getMembers()[name]["IsActive"] = True
+        self.getOrder().append(name)
+    
+    def deactivateMeber(self, name):
+        self.getMembers()[name]["IsActive"] = False
+        o = self.getOrder()
+        o.pop(o.index(name))
     
     def iterateOrder(self):
         o = currOrder = self.getOrder()
         o.insert(len(o)-1, o.pop(0))
         
-    def changeMembersOrder(self, id, offset):
+    def changeMembersOrder(self, name, offset):
         o = self.getOrder()
-        currIdx = o.index(id)
+        currIdx = o.index(name)
         newIdx = (currIdx + offset) % len(o)
         if newIdx < 0:
             newIdx += len(o) - 1
