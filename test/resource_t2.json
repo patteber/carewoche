@@ -14,8 +14,8 @@
         }
     },
     "Order": [
-        "Bob",
         "Charlie",
+        "Bob",
         "Alice"
     ]
 }
