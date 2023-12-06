@@ -1,0 +1,63 @@
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+}
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+div.left{
+    padding: 10px 50px;
+    float: left;
+}
+div.right{
+    padding: 10px 50px;
+    float: right;
+}
+div.buttons {
+    margin-left: auto;
+    padding: 10px 50px;
+    width: 50%;
+}
+div.list {
+    margin: auto;
+    width: 5%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    padding: 20px 120px;
+    line-height: 150%;
+}
+div.dialog {
+    font-family: Arial, Helvetica, sans-serif;
+}
+hr {
+    border-top: 2px solid black;
+    margin-top: 5%;
+}
+.button {
+    background-color: white; /* Green */
+    border: none;
+    border-radius: 12px;
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+  }
+
+  .button1:hover {
+    background-color: #555555;
+    color: white;
+  }
