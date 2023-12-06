@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from care import Carewoche
 from pydantic import BaseModel, Field
@@ -35,7 +35,7 @@ class Member(BaseModel):
 class changeOrder(BaseModel):
     name: str
     offset: int
-    
+
 @app.get("/")
 async def root():
     return {"Service Name": "CareWocheService"}
@@ -59,18 +59,22 @@ async def delete_member(member: Member):
     c = Carewoche('test/resource_t2.json')
     c.deleteMember(member.name)
     c.writeFile()
-    return c.getMembers() 
+    return c.getMembers()
 
 @app.get("/order/")
 async def read_order(skip: int = 0, limit: int = 10):
     c = Carewoche('test/resource_t2.json')
     return c.getOrder()[skip: skip + limit]
-    
+
 @app.post("/order/change/")
 async def change_order(co: changeOrder):
     d = co.model_dump()
     c = Carewoche('test/resource_t2.json')
-    c.changeMembersOrder(d.get("name"), d.get("offset"))
+    try:
+        c.changeMembersOrder(d.get("name"), d.get("offset"))
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Name not found")
+
     c.writeFile()
     return c.getOrder()
 

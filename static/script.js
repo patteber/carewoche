@@ -1,25 +1,81 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // JSON-Daten laden (Beispiel-Daten)
-/*    fetch('http://127.0.0.1:8000/members/', {
-    headers: {
-        'Content-Type': 'application/json'
+
+    printCaretakerQueue = function(orderJson){
+        var list = document.getElementById("caretakerQueue");
+        order = JSON.parse(orderJson);
+        var first = true;
+        for(var key in order) {
+            if(first){
+                first = false;
+                list.innerHTML = "<b>" + order[key] + "</b><br>";
+            } else {
+                list.innerHTML += order[key] + "<br>";
+            }
+        }
     }
-    })
-    .then(response => response.text())
-    .then(text => console.log(text))
-  */  
-     callback = function(t) {alert(t)}
 
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
+    xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
+            printCaretakerQueue(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", "http://127.0.0.1:8000/members/", true); // true for asynchronous 
+    xmlHttp.open("GET", "http://127.0.0.1:8000/order/", true); // true for asynchronous
     xmlHttp.send("'Content-Type': 'application/json'");
-    alert("here we go")
-    var res = xmlHttp.responseText
-    
+
+    // Next Button
+    const Nextbutton = document.getElementById('next-btn');
+    Nextbutton.addEventListener('click', async _ => {
+      try {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                printCaretakerQueue(xmlHttp.responseText);
+        }
+        xmlHttp.open("POST", "http://127.0.0.1:8000/order/iterate/", true); // true for asynchronous
+        xmlHttp.send("'Content-Type': 'application/json'");
+        xmlHttp.send(null);
+
+        } catch(err) {
+        console.error(`Error: ${err}`);
+      }
+    });
+
+    // Change Order Button
+    const changeButton = document.getElementById('change-btn');
+    changeButton.addEventListener("click", () => {
+                document.getElementById("dialog")
+                    .showModal();
+            });
+        document.getElementById("close-dialog")
+            .addEventListener("click", () => {
+                document.getElementById("dialog")
+                    .close();
+            });
+
+    const postChangeButton = document.getElementById('postChange-btn');
+    postChangeButton.addEventListener('click', async _ => {
+        try {
+            const name = document.getElementById('name-input').value;
+            const offset = document.getElementById('offset-input').value;
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                printCaretakerQueue(xmlHttp.responseText);
+            }
+            if (xmlHttp.status === 404) {
+                alert("Name " + name + " not found!")
+            }
+          }
+          xmlHttp.open("POST", "http://127.0.0.1:8000/order/change/", true);
+          xmlHttp.setRequestHeader("Content-Type", "application/json");
+          xmlHttp.send(JSON.stringify({"name": name, "offset": offset}));
+
+        } catch(err) {
+          console.error(`Error: ${err}`);
+        }
+    });
+
+
     /*var jsonData = [
         { Name: "Max", Alter: 25, Stadt: "Berlin" },
         { Name: "Anna", Alter: 30, Stadt: "Hamburg" },

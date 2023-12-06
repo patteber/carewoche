@@ -1,18 +1,109 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON-Tabelle</title>
+    <title>Carewoche</title>
+    <style>
+        h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        div.left{
+            padding: 10px 50px;
+            float: left;
+        }
+        div.right{
+            padding: 10px 50px;
+            float: right;
+        }
+        div.buttons {
+            margin-left: auto;
+            padding: 10px 50px;
+            width: 50%;
+        }
+        div.list {
+            margin: auto;
+            width: 0%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            padding: 20px 120px;
+            line-height: 150%;
+        }
+        div.dialog {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        hr {
+            border-top: 2px solid navy;
+        }
+        .button {
+            background-color: white; /* Green */
+            border: none;
+            border-radius: 12px;
+            color: white;
+            padding: 8px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+          }
+          .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+          }
+
+          .button1:hover {
+            background-color: #555555;
+            color: white;
+          }
+    </style>
 </head>
 <body>
+    <hgroup>
+        <div class="left">
+            <h1>Caretaker Queue</h1>
+        </div>
+        <div class="right">
+            <button class="button button1" id="next-btn">Next One</button>
+            <button class="button button1" id="change-btn">Change Order</button>
+            <button class="button button1" type="submit">Edit Members</button>
+        </div>
+    </hgroup>
+    <br><br><br><br><hr>
+    <div class="list">
 
-    <h1>JSON-Tabelle</h1>
+        <p id="caretakerQueue"></p>
+    </div>
 
+    <!--
     <table id="jsonTable" border="10">
-        <!-- Hier wird die Tabelle eingefügt -->
+         Hier wird die Tabelle eingefügt
     </table>
-
+    -->
+    <dialog id="dialog">
+        <h2>Change Order</h2>
+        <div class="dialog">
+            <input id="name-input" type="text"/>
+            <label for="name-input">Name</label>
+            <br>
+            <input id="offset-input" type="number"/>
+            <label for="offset-input">Offset (integer)</label>
+        </div>
+        <br>
+        <button id="postChange-btn" class="button1">Change</button>
+        <button id="close-dialog" class="button1">Cancel</button>
+    </dialog>
     <script src="script.js"></script>
 </body>
 </html>
