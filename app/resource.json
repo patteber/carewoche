@@ -7,15 +7,15 @@
             "IsActive": true
         },
         "Charlie": {
-            "IsActive": true
+            "IsActive": false
         },
         "Doris": {
-            "IsActive": false
+            "IsActive": true
         }
     },
     "Order": [
-        "Charlie",
+        "Alice",
         "Bob",
-        "Alice"
+        "Doris"
     ]
 }

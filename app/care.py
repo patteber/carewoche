@@ -48,7 +48,10 @@ class Carewoche:
     def deactivateMeber(self, name):
         self.getMembers()[name]["IsActive"] = False
         o = self.getOrder()
-        o.pop(o.index(name))
+        try:
+            o.pop(o.index(name))
+        except ValueError:
+            pass
     
     def iterateOrder(self):
         o = currOrder = self.getOrder()

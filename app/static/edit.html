@@ -15,7 +15,7 @@
             <button class="button button1" id="new-btn">New</button>
             <button class="button button1" id="change2-btn">Change</button>
             <button class="button button1" id="del-btn">Delete</button>
-            <form action="/app/index.html" style="display: inline;">
+            <form action="/app/index.html" style="display: inline;">                
                 <button class="button button1" id="back-btn"type="submit">Back</button>
             </form>
         </div>
@@ -24,19 +24,48 @@
     <div class="list">
         <p id="membersList"></p>
     </div>
-    <b>Active Member</b> / Inactive Members<br>
-    <dialog id="dialog">
-        <h2>Change Order</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif;">
+        <b>Active Member</b> / Inactive Members<br>
+    </p>
+    
+    <dialog id="newDialog">
+        <h2>New Member</h2>
         <div class="dialog">
-            <input id="name-input" type="text"/>
-            <label for="name-input">Name</label>
+            <input id="newName-input" type="text"/>
+            <label for="newName-input">Name</label>
             <br>
-            <input id="offset-input" type="number"/>
-            <label for="offset-input">Offset (integer)</label>
+            <input id="newActive-input" value="true" type="checkbox"/>
+            <label for="newActive-input">Active</label>
         </div>
         <br>
-        <button id="postChange-btn" class="button1">Change</button>
-        <button id="close-dialog" class="button1">Cancel</button>
+        <button id="postNew-btn" class="button1">Add</button>
+        <button id="closeNew-dialog" class="button1">Cancel</button>
+    </dialog>
+
+    <dialog id="delDialog">
+        <h2>Delete Member</h2>
+        <div class="dialog">
+            <input id="delName-input" type="text"/>
+            <label for="delName-input">Name</label>
+        </div>
+        <br>
+        <button id="postdel-btn" class="button1">Delete</button>
+        <button id="closedel-dialog" class="button1">Cancel</button>
+    </dialog>
+    <script src="scriptEdit.js"></script>
+
+    <dialog id="updDialog">
+        <h2>Update Member</h2>
+        <div class="dialog">
+            <input id="updName-input" type="text"/>
+            <label for="updName-input">Name</label>
+            <br>
+            <input id="updActive-input" value="true" type="checkbox"/>
+            <label for="updActive-input">Active</label>
+        </div>
+        <br>
+        <button id="postupd-btn" class="button1">Ok</button>
+        <button id="closeupd-dialog" class="button1">Cancel</button>
     </dialog>
     <script src="scriptEdit.js"></script>
 </body>
