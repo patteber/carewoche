@@ -13,13 +13,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
-
+    var url = this.location.protocol + "//" + this.location.host
+    alert (url)
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             printCaretakerQueue(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", "http://127.0.0.1:8000/order/", true); // true for asynchronous
+    xmlHttp.open("GET", url + "/order/", true); // true for asynchronous
     xmlHttp.send("'Content-Type': 'application/json'");
 
     // Next Button
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                 printCaretakerQueue(xmlHttp.responseText);
         }
-        xmlHttp.open("POST", "http://127.0.0.1:8000/order/iterate/", true); // true for asynchronous
+        xmlHttp.open("POST", url + "/order/iterate/", true); // true for asynchronous
         xmlHttp.send("'Content-Type': 'application/json'");
         xmlHttp.send(null);
 
@@ -67,45 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("Name " + name + " not found!")
                 }
             }
-            xmlHttp.open("POST", "http://127.0.0.1:8000/order/change/", true);
+            xmlHttp.open("POST", url + "/order/change/", true);
             xmlHttp.setRequestHeader("Content-Type", "application/json");
             xmlHttp.send(JSON.stringify({"name": name, "offset": offset}));
         } catch(err) {
           console.error(`Error: ${err}`);
         }
     });
-
-    // Edit Button
-
-
-    /*var jsonData = [
-        { Name: "Max", Alter: 25, Stadt: "Berlin" },
-        { Name: "Anna", Alter: 30, Stadt: "Hamburg" },
-        { Name: "Peter", Alter: 22, Stadt: "München" }
-    ];*/
-/*
-    alert(res["Members"])
-    var jsonData = res["Members"]
-
-    // Tabelle erstellen
-    var table = document.getElementById("jsonTable");
-
-    // Tabellenkopf erstellen
-    var thead = table.createTHead();
-    var headerRow = thead.insertRow();
-    Object.keys(jsonData[0]).forEach(function (key) {
-        var th = document.createElement("th");
-        th.appendChild(document.createTextNode(key));
-        headerRow.appendChild(th);
-    });
-
-    // Tabelleninhalt erstellen
-    var tbody = table.createTBody();
-    jsonData.forEach(function (row) {
-        var tr = tbody.insertRow();
-        Object.values(row).forEach(function (value) {
-            var td = tr.insertCell();
-            td.appendChild(document.createTextNode(value));
-        });
-    });*/
 });

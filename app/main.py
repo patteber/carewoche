@@ -1,13 +1,13 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from care import Carewoche
+from app.care import Carewoche
 from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-file = 'resource.json'
-app.mount('/static', StaticFiles(directory='static',html=True))
+file = './app/resource.json'
+app.mount('/app', StaticFiles(directory='./app/static',html=True))
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0')
 #> uvicorn main:app --reload
