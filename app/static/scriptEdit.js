@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
         list.innerHTML = "";
         for(var key in members) {
             if(members[key]["IsActive"]){
-                list.innerHTML += "<b>"+key+"</b>"; 
+                list.innerHTML += "<b>"+key+"</b>";
             }else{
                 list.innerHTML += key;
             }
-            list.innerHTML += "<br>";   
+            list.innerHTML += "<br>";
         }
-        
+
     }
 
     var url = this.location.protocol + "//" + this.location.host
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             printMembers(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", url + "/members/", true);
+    xmlHttp.open("GET", url + "/members/?skip=0&limit=100", true);
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(null);
 

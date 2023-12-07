@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             printCaretakerQueue(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", url + "/order/", true);
+    xmlHttp.open("GET", url + "/order/?skip=0&limit=100", true);
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(null);
 
