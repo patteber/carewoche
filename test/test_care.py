@@ -1,6 +1,6 @@
 import os
 import unittest
-from care import Carewoche
+from app.care import Carewoche
 
 class Test_Carewoche(unittest.TestCase):
     file_t1 = 'test/resource_t1.json'
