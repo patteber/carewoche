@@ -20,7 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             printMembers(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", url + "/members/", true); // true for asynchronous
-    xmlHttp.send("'Content-Type': 'application/json'");
+    xmlHttp.open("GET", url + "/members/", true);
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.send(null);
 
 });

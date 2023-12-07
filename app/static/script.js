@@ -14,14 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     var url = this.location.protocol + "//" + this.location.host
-    alert (url)
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             printCaretakerQueue(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", url + "/order/", true); // true for asynchronous
-    xmlHttp.send("'Content-Type': 'application/json'");
+    xmlHttp.open("GET", url + "/order/", true);
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.send(null);
 
     // Next Button
     const Nextbutton = document.getElementById('next-btn');
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                 printCaretakerQueue(xmlHttp.responseText);
         }
-        xmlHttp.open("POST", url + "/order/iterate/", true); // true for asynchronous
-        xmlHttp.send("'Content-Type': 'application/json'");
+        xmlHttp.open("POST", url + "/order/iterate/", true);
+        xmlHttp.setRequestHeader("Content-Type", "application/json");
         xmlHttp.send(null);
 
         } catch(err) {
