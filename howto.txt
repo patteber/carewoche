@@ -1,0 +1,5 @@
+# build docker image
+docker build -t <image_name> .
+
+# run container 
+docker run -d --name <container_name> --mount source=mv1,target=/mnt/data -p 80:80 <image_name>
