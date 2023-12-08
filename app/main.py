@@ -2,8 +2,7 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from app.care import Carewoche
-from pydantic import BaseModel, Field
-from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 file = './app/resource.json'
