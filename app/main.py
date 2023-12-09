@@ -5,7 +5,7 @@ from app.care import Carewoche
 from pydantic import BaseModel
 
 app = FastAPI()
-file = './app/resource.json'
+file = './app/data/resource.json'
 app.mount('/app', StaticFiles(directory='./app/static',html=True))
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0')
